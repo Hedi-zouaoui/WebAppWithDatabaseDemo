@@ -58,9 +58,7 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
     zipAfterPublish: True
 
-- task: SonarCloudPublish@1
-   inputs:
-     pollingTimeoutSec: '300'
+
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact (WebApp.zip)'
