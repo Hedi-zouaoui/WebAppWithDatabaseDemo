@@ -1,11 +1,5 @@
 trigger:
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure for Students(e3b4b040-075f-4ac9-9dc0-89781a968364)'
-    appType: 'webApp'
-    WebAppName: 'dotnetcore-app-demo'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+
 - main
 
 pool: Default
@@ -53,4 +47,10 @@ steps:
   displayName: 'Publish Artifact (WebApp.zip)'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
-
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure for Students(e3b4b040-075f-4ac9-9dc0-89781a968364)'
+    appType: 'webApp'
+    WebAppName: 'dotnetcore-app-demo'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
