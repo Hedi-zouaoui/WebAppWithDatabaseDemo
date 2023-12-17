@@ -28,7 +28,13 @@ steps:
     projects: '**/WebApp.csproj'
 
 
-
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'dotnet-demo'
+    organization: 'test-demo-dot-net'
+    scannerMode: 'MSBuild'
+    projectKey: 'hedizouaoui0036_DotNet-Core'
+    projectName: 'DotNet-Core'
 
 
 - task: DotNetCoreCLI@2
@@ -38,21 +44,15 @@ steps:
     arguments: '--configuration $(BuildConfiguration)'
     
   
-- task: SonarCloudPrepare@1
+- task: SonarCloudAnalyze@1
   inputs:
-    SonarCloud: 'dotnet-demo'
-    organization: 'test-demo-dot-net'
-    scannerMode: 'MSBuild'
-    projectKey: 'hedizouaoui0036_DotNet-Core'
-    projectName: 'DotNet-Core'
+    jdkversion: 'JAVA_HOME_17_X64'
 
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
 
-- task: SonarCloudAnalyze@1
-  inputs:
-    jdkversion: 'JAVA_HOME_17_X64'
+
 
 - task: DotNetCoreCLI@2
   displayName: Run Unit Tests
