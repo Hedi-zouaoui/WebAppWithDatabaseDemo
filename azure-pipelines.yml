@@ -32,7 +32,7 @@ steps:
     SonarCloud: 'dotnet-demo'
     organization: 'test-demo-dot-net'
     scannerMode: 'MSBuild'
-    projectKey: 'DotNet-Core'
+    projectKey: 'hedizouaoui0036_DotNet-Core'
     projectName: 'DotNet-Core'
 
 
@@ -42,9 +42,7 @@ steps:
   inputs:
     projects: '**/WebApp.csproj'
     arguments: '--configuration $(BuildConfiguration)'
-- task: SonarCloudAnalyze@1
-  inputs:
-    jdkversion: 'JAVA_HOME_17_X64'
+
 - task: DotNetCoreCLI@2
   displayName: Run Unit Tests
   inputs:
@@ -60,10 +58,19 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
     zipAfterPublish: True
 
+- task: SonarCloudPublish@1
+   inputs:
+     pollingTimeoutSec: '300'
+
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact (WebApp.zip)'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
+
+
+
+
+
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
