@@ -50,6 +50,10 @@ steps:
   inputs:
     pollingTimeoutSec: '300'
 
+- task: SonarCloudAnalyze@1
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
+
 - task: DotNetCoreCLI@2
   displayName: Run Unit Tests
   inputs:
