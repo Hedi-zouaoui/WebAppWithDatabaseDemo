@@ -27,13 +27,7 @@ steps:
     command: restore
     projects: '**/WebApp.csproj'
 
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'dotnet-demo'
-    organization: 'test-demo-dot-net'
-    scannerMode: 'MSBuild'
-    projectKey: 'hedizouaoui0036_DotNet-Core'
-    projectName: 'DotNet-Core'
+
 
 
 
@@ -42,6 +36,19 @@ steps:
   inputs:
     projects: '**/WebApp.csproj'
     arguments: '--configuration $(BuildConfiguration)'
+    
+  
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'dotnet-demo'
+    organization: 'test-demo-dot-net'
+    scannerMode: 'MSBuild'
+    projectKey: 'hedizouaoui0036_DotNet-Core'
+    projectName: 'DotNet-Core'
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: DotNetCoreCLI@2
   displayName: Run Unit Tests
