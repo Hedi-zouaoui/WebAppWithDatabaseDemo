@@ -35,16 +35,16 @@ steps:
     projectKey: 'DotNet-Core'
     projectName: 'DotNet-Core'
 
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
+
 
 - task: DotNetCoreCLI@2
   displayName: Build Web App
   inputs:
     projects: '**/WebApp.csproj'
     arguments: '--configuration $(BuildConfiguration)'
-
+- task: SonarCloudAnalyze@1
+  inputs:
+    jdkversion: 'JAVA_HOME_17_X64'
 - task: DotNetCoreCLI@2
   displayName: Run Unit Tests
   inputs:
