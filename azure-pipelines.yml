@@ -1,6 +1,7 @@
 trigger:
 
 
+
 - main
 
 pool: Default
@@ -62,6 +63,8 @@ steps:
     appType: 'webApp'
     WebAppName: 'dotnetcore-app-demo'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/*.zip'
+ 
 - task: PowerShell@2
   inputs:
-    filePath: 'sonar-add-project-guid.ps1'    
+    filePath: 'sonar-add-project-guid.ps1'
+    workingDirectory: 'WebApp'
