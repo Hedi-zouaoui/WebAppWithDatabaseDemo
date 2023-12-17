@@ -11,6 +11,9 @@ variables:
   
 steps:
 
+- checkout: self
+  fetchDepth: 0
+
 - task: UseDotNet@2
   displayName: Install .NET 6 sdk
   inputs:
@@ -31,6 +34,11 @@ steps:
     scannerMode: 'MSBuild'
     projectKey: 'DotNet-Core'
     projectName: 'DotNet-Core'
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
+
 - task: DotNetCoreCLI@2
   displayName: Build Web App
   inputs:
