@@ -92,10 +92,11 @@ stages:
   - stage : Deploy Azure 
     displayName: Azure cloud
     jobs : 
-         - job :
+         - job : Azure 
            displayName: Azure cloud
            pool : Default
-           stesps : 
+           steps : 
+           
              - task: AzureRmWebAppDeployment@4
                inputs:
                   ConnectionType: 'AzureRM'
