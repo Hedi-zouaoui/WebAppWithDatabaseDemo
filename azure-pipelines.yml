@@ -23,6 +23,9 @@ stages:
             inputs:
               command: restore
               projects: '**/WebApp.csproj'
+      - job : SonarCloud
+        displayName: 'SonarCloud prepare'
+        steps : 
           - task: SonarCloudPrepare@1
             inputs:
               SonarCloud: 'dotnet-demo'
@@ -58,13 +61,7 @@ stages:
             displayName: 'Publish Artifact (WebApp.zip)'
             inputs:
               PathtoPublish: '$(build.artifactstagingdirectory)'
-          - task: AzureRmWebAppDeployment@4
-            inputs:
-              ConnectionType: 'AzureRM'
-              azureSubscription: 'Azure for Students(e3b4b040-075f-4ac9-9dc0-89781a968364)'
-              appType: 'webApp'
-              WebAppName: 'dotnetcore-app-demo'
-              packageForLinux: '$(Build.ArtifactStagingDirectory)/*.zip'
+
           - task: PowerShell@2
             inputs:
               filePath: 'sonar-add-project-guid.ps1'
@@ -87,5 +84,23 @@ stages:
             displayName: 'Publish Artifact: UI-Test'
             inputs:
               ArtifactName: 'UI-Test'
-        
+          - task: MicrosoftSecurityDevOps@1
+            inputs:
+              command: 'run'
+              categories: 'secrets, code, artifacts'
+              tools: 'bandit, binskim, eslint, templateanalyzer, trivy'
+  - stage : Deploy Azure 
+    displayName: Azure cloud
+    jobs : 
+         - job :
+           displayName: Azure cloud
+           pool : Default
+           stesps : 
+             - task: AzureRmWebAppDeployment@4
+               inputs:
+                  ConnectionType: 'AzureRM'
+                  azureSubscription: 'Azure for Students(e3b4b040-075f-4ac9-9dc0-89781a968364)'
+                  appType: 'webApp'
+                  WebAppName: 'dotnetcore-app-demo'
+                  packageForLinux: '$(Build.ArtifactStagingDirectory)/*.zip'
 
