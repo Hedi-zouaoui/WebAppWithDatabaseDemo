@@ -89,7 +89,7 @@ stages:
               command: 'run'
               categories: 'secrets, code, artifacts'
               tools: 'bandit, binskim, eslint, templateanalyzer, trivy'
-  - stage : Deploy Azure 
+  - stage : Deploy_Azure 
     displayName: Azure cloud
     jobs : 
          - job : Azure 
