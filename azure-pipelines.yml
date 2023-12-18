@@ -91,7 +91,7 @@ stages:
               categories: 'secrets, code, artifacts'
               tools: 'bandit, binskim, eslint, templateanalyzer, trivy'
   - stage : Deploy_Azure 
-    displayName: Azure cloud
+    displayName:  Deployment 
     jobs : 
          - job : Azure 
            displayName: 'Azure cloud'
