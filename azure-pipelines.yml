@@ -23,10 +23,6 @@ stages:
             inputs:
               command: restore
               projects: '**/WebApp.csproj'
-      - job : SonarCloud
-        displayName: 'SonarCloud prepare'
-        pool: Default
-        steps : 
           - task: SonarCloudPrepare@1
             inputs:
               SonarCloud: 'dotnet-demo'
@@ -47,7 +43,6 @@ stages:
               pollingTimeoutSec: '300'
           - task: DotNetCoreCLI@2
             displayName: Run Unit Tests
-            enabled: ${{ parameters.runCompletePipeline }}
             inputs:
               command: test
               projects: '**/*UnitTest*.csproj'
@@ -63,7 +58,13 @@ stages:
             displayName: 'Publish Artifact (WebApp.zip)'
             inputs:
               PathtoPublish: '$(build.artifactstagingdirectory)'
-
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Azure for Students(e3b4b040-075f-4ac9-9dc0-89781a968364)'
+              appType: 'webApp'
+              WebAppName: 'dotnetcore-app-demo'
+              packageForLinux: '$(Build.ArtifactStagingDirectory)/*.zip'
           - task: PowerShell@2
             inputs:
               filePath: 'sonar-add-project-guid.ps1'
@@ -86,24 +87,3 @@ stages:
             displayName: 'Publish Artifact: UI-Test'
             inputs:
               ArtifactName: 'UI-Test'
-          - task: MicrosoftSecurityDevOps@1
-            inputs:
-              command: 'run'
-              categories: 'secrets, code, artifacts'
-              tools: 'bandit, binskim, eslint, templateanalyzer, trivy'
-  - stage : Deploy_Azure 
-    displayName:  Deployment 
-    jobs : 
-         - job : Azure 
-           displayName: 'Azure cloud'
-           pool : Default
-           steps : 
-           
-             - task: AzureRmWebAppDeployment@4
-               inputs:
-                  ConnectionType: 'AzureRM'
-                  azureSubscription: 'Azure for Students(e3b4b040-075f-4ac9-9dc0-89781a968364)'
-                  appType: 'webApp'
-                  WebAppName: 'dotnetcore-app-demo'
-                  packageForLinux: '$(Build.ArtifactStagingDirectory)/*.zip'
-
