@@ -25,6 +25,7 @@ stages:
               projects: '**/WebApp.csproj'
       - job : SonarCloud
         displayName: 'SonarCloud prepare'
+        pool: Default
         steps : 
           - task: SonarCloudPrepare@1
             inputs:
