@@ -47,6 +47,7 @@ stages:
               pollingTimeoutSec: '300'
           - task: DotNetCoreCLI@2
             displayName: Run Unit Tests
+            enabled: ${{ parameters.runCompletePipeline }}
             inputs:
               command: test
               projects: '**/*UnitTest*.csproj'
