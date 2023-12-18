@@ -87,3 +87,9 @@ stages:
             displayName: 'Publish Artifact: UI-Test'
             inputs:
               ArtifactName: 'UI-Test'
+          - task : MicrosoftSecurityDevOps@1
+            displayName: 'Microsoft Security DevOps'
+            inputs:
+              categories: 'secrets, code, artifacts'
+              tools: 'bandit, binskim, eslint, templateanalyzer, trivy'
+
