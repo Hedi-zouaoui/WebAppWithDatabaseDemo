@@ -93,7 +93,7 @@ stages:
     displayName: Azure cloud
     jobs : 
          - job : Azure 
-           displayName: Azure cloud
+           displayName: 'Azure cloud'
            pool : Default
            steps : 
            
