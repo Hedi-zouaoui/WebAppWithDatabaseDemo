@@ -30,8 +30,8 @@ jobs:
   - task: DotNetCoreCLI@2
     displayName: Restore Nuget Packages
     inputs:
-    command: restore
-    projects: '**/WebApp.csproj'
+     command: restore
+     projects: '**/WebApp.csproj'
 
 
   - task: SonarCloudPrepare@1
@@ -88,11 +88,11 @@ jobs:
 
   - task: AzureRmWebAppDeployment@4
     inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure for Students(e3b4b040-075f-4ac9-9dc0-89781a968364)'
-    appType: 'webApp'
-    WebAppName: 'dotnetcore-app-demo'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)/*.zip'
+     ConnectionType: 'AzureRM'
+     azureSubscription: 'Azure for Students(e3b4b040-075f-4ac9-9dc0-89781a968364)'
+     appType: 'webApp'
+     WebAppName: 'dotnetcore-app-demo'
+     packageForLinux: '$(Build.ArtifactStagingDirectory)/*.zip'
  
   - task: PowerShell@2
     inputs:
